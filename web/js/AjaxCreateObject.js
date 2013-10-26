@@ -6,7 +6,7 @@ function createObject()
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
 	request_type=new XMLHttpRequest();
-	}
+	}d
 	else
 	{// code for IE6, IE5
 	request_type=new ActiveXObject("Microsoft.XMLHTTP");
