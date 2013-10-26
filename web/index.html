@@ -1,0 +1,146 @@
+<!-- <!DOCTYPE html> -->
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/latihan.css"> <!--pemanggilan file css-->
+
+</head>
+<script src="js/AjaxCreateObject.js" language="javascript"></script>
+<script type="text/javascript">
+function popClik()
+{
+	
+	var lightbox = document.getElementById("lightbox");
+       var dimmer = document.createElement("div");
+    
+    dimmer.style.width =  document.documentElement.scrollWidth + 'px';
+    dimmer.style.height = document.documentElement.scrollHeight + 'px';
+    dimmer.className = 'dimmer';
+    dimmer.id='dim';
+    test.onclick=function(){
+        document.body.removeChild(this);   
+        lightbox.style.visibility = 'hidden';
+    }
+    
+    dimmer.onclick = function(){
+        document.body.removeChild(this);   
+		document.getElementById('user').value="";
+		document.getElementById('pass').value="";
+        lightbox.style.visibility = 'hidden';
+    }
+        
+    document.body.appendChild(dimmer);
+    
+    lightbox.style.visibility = 'visible';
+    lightbox.style.top = window.innerHeight/2 - 200 + 'px';
+    lightbox.style.left = window.innerWidth/2 - 100 + 'px';
+	document.getElementById("user").focus();
+}
+function login()
+{
+	
+	//mengambil semua variable dalam form login
+	var username = encodeURI(document.getElementById('user').value);	
+	var password = encodeURI(document.getElementById('pass').value);
+	
+	//request ke file php
+	http.open('get', 'proses_login.php?user='+username+'&pass='+password,true);
+	//cek hasil request 4 jika berhasil
+	http.onreadystatechange = function()
+	  {
+		
+		if (http.readyState==4 && http.status==200)
+		{
+			try
+			{
+			var decodeJSON = JSON.parse(http.responseText);
+			
+			document.getElementById("Error").innerHTML=decodeJSON.nama;
+			var lightbox = document.getElementById("lightbox");
+			var dimmer = document.getElementById("dim");
+			var signup = document.getElementById("signup");
+			var loginButton = document.getElementById("loginButton");
+			lightbox.style.visibility = 'hidden';
+			signup.style.visibility = 'hidden';
+			loginButton.src="images/signup.png";
+			loginButton.onclick=function()
+			{
+				document.write("berhasil");
+			}
+			document.body.removeChild(dimmer); 
+			}
+			catch(e)
+			{
+			document.getElementById("Error").innerHTML=http.responseText;
+			var user=document.getElementById("user");
+			
+			
+			}
+		}
+	  }
+	http.send(); 
+	
+}
+
+</script>
+<body>
+<div id="lightbox">			 <!--pop up-->
+		<form id="test">
+			nama : <input type="text" id="user" value='user'/>username</br>
+			password : <input type="password" id="pass" value='pass'>password</br>
+			<input type="button" value="LogIn" onclick=login()></input></br>
+			<p id="Error"></p>
+			</form>
+
+		</div>
+<div class = "main">
+	<div class = "header">
+		
+		<div class = "logohead">
+			<div >
+				<img src = "images/logo.png" class = "logo">
+				</img>
+				</div>
+			<div class = "loginplace">
+				<div>
+					<img src = "images/login.png" class = "login" onclick="popClik()" id="loginButton"></img>
+				</div>
+				<div >
+					<img src = "images/cart.png" class = "cart" ></img>
+				</div>
+			</div>
+			<div class = "signupplace">
+				<div>
+					<img src = "images/signup.png" class = "signup" id="signup"></img>
+					
+				</div> 
+			
+			</div>
+		</div>
+		<div class = "menu">
+				<div>
+					<img src = "images/jacket.png" class = "jacket"></img>
+				</div>
+				<div>
+					<img src = "images/jacket.png" class = "tshirt"></img>
+				</div>
+				<div >
+					<img src = "images/jacket.png" class = "wristband"></img>
+				</div>
+				<div>
+					<img src = "images/jacket.png"  class = "emblem"></img>
+				</div>
+				<div>
+					<img src = "images/jacket.png"  class = "pokemon"></img>
+				</div>
+		</div>
+		<div class = "main">
+		</div>
+	
+</div>
+
+
+
+
+</body>
+</html>
